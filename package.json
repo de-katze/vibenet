@@ -1,0 +1,19 @@
+{
+  "name": "vibenet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cliqz/adblocker-electron": "^1.26.6",
+    "@pyke/vibe": "^0.4.0",
+    "custom-electron-titlebar": "^4.2.7",
+    "electron": "^26.1.0",
+    "electron-tabs": "^1.0.1"
+  }
+}

@@ -1,0 +1,43 @@
+* {
+    font-family: monospace;
+    color: #DEDEDE;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+#greeting {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+#search-container {
+    margin-top: 20px;
+}
+
+#search-input {
+    padding: 10px;
+    font-size: 18px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c6c6c4f;
+    text-align: left;
+}
+
+#search-input::placeholder {
+    text-align: center;
+}
+
+#time {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+*:focus {
+    outline: none;
+}
