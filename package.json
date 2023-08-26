@@ -1,7 +1,7 @@
 {
   "name": "vibenet",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "An Electron based \"browser\" utilizing @pyke/vibe for an acrylic effect.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
