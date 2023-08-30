@@ -1,19 +1,30 @@
-const history = [];
+const workers = {
+    css: new Worker("workers/css.js"),
+    history: new Worker("workers/history.js")
+}
 
 const title = document.getElementById("title");
 const tabGroup = document.querySelector("tab-group");
 
-tabGroup.setDefaultTab({ title: "New Tab", src: "newtab/index.html", active: true })
+tabGroup.setDefaultTab({ title: "New Tab", src: "newtab/index.html", active: true, webviewAttributes: { preload: "tabPreload.js", plugins: true, nodeintegration: true } })
 
 tabGroup.on("tab-added", (tab, tabGroup) => {
     tab.on("webview-dom-ready", (tab) => {
+        const { host } = new URL(tab.webview.getURL())
         title.innerText = `${tab.webview.getTitle()} ―― VibeNet`
         tab.setTitle(tab.webview.getTitle())
-        tab.setIcon(`https://icon.horse/icon/${new URL(tab.webview.getURL()).host}`)
+        tab.setIcon(`https://icon.horse/icon/${host || tab.webview.getTitle()}`)
 
         document.getElementById("searchbar").value = tab.webview.getURL()
 
         addToHistory(tab.webview.getURL(), tab.webview.getTitle())
+
+        workers.css.postMessage({ host });
+        workers.css.onmessage = function(event) {
+            const { cssCode } = event.data;
+        
+            tab.webview.insertCSS(cssCode);
+        };        
     });
 
     tab.on("active", (tab) => {
@@ -23,15 +34,15 @@ tabGroup.on("tab-added", (tab, tabGroup) => {
 
 tabGroup.addTab()
 
-// Function to replace the 4th child with your element
-function replaceFourthChild() {
+// Set up a MutationObserver to detect changes in the DOM
+const observer = new MutationObserver(() => {
     const menubar = document.getElementsByClassName("cet-menubar")[0];
 
-    // Check if there are at least 4 children
     if (menubar && menubar.children.length >= 5) {
-        menubar.children[0].addEventListener("click", (() => tabGroup.getActiveTab().webview.goBack()))
-        menubar.children[1].addEventListener("click", (() => tabGroup.getActiveTab().webview.reload()))
-        menubar.children[2].addEventListener("click", (() => tabGroup.getActiveTab().webview.goForward()))
+        setupMenuBarItem(menubar.children[0], "Bitwarden", (() => vibenet.bitwarden()))
+        setupMenuBarItem(menubar.children[1], "Back", (() => tabGroup.getActiveTab().webview.goBack()))
+        setupMenuBarItem(menubar.children[2], "Reload", (() => tabGroup.getActiveTab().webview.reload()))
+        setupMenuBarItem(menubar.children[3], "Forward", (() => tabGroup.getActiveTab().webview.goForward()))
 
         const sb = document.createElement("input")
         sb.type = "text"
@@ -40,18 +51,14 @@ function replaceFourthChild() {
         sb.id = "searchbar"
         sb.placeholder = "Search"
 
-        menubar.children[3].replaceWith(sb);
+        menubar.children[4].replaceWith(sb);
 
         searchBar()
 
         observer.disconnect()
     }
-}
+});
 
-// Set up a MutationObserver to detect changes in the DOM
-const observer = new MutationObserver(replaceFourthChild);
-
-// Start observing changes in the DOM
 observer.observe(document.body, { childList: true, subtree: true });
 
 function searchBar() {
@@ -82,9 +89,7 @@ function searchBar() {
 }
 
 function determineType(input) {
-    const httpHttpsRegex = /^(https?):\/\/[^\s/$.?#].[^\s]*$/i;
-
-    if (httpHttpsRegex.test(input)) {
+    if (/^(https?):\/\/[^\s/$.?#].[^\s]*$/i.test(input)) {
         return 1;
     } else if (input.startsWith("newtab://")) {
         return 1;
@@ -95,19 +100,33 @@ function determineType(input) {
     }
 }
 
+document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+        tabGroup.getActiveTab().webview.openDevTools()
+    }
+});
+
+function setupMenuBarItem(element, title, listener) {
+    element.setAttribute("title", title);
+    element.addEventListener("click", listener);
+}
+
 function addToHistory(url, title) {
-    const timestamp = new Date();
-    history.push({ url, title, timestamp });
+    workers.history.postMessage({ type: 'addToHistory', data: { url, title } });
 }
 
+// Function to remove from history
 function removeFromHistory(index) {
-    if (confirm("Are you sure you want remove this from your history?") && index >= 0 && index < history.length) {
-        history.splice(index, 1);
-    }
+    workers.history.postMessage({ type: 'removeFromHistory', data: { index } });
 }
 
+// Function to clear history
 function clearHistory() {
-    if (confirm("Are you sure you want to clear your history?")) {
-        history.length = 0;
-    }
+    workers.history.postMessage({ type: 'clearHistory' });
 }
+
+workers.css.onmessage = function(event) {
+    const { history } = event.data;
+
+    // show history window
+};

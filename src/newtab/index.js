@@ -1,3 +1,14 @@
+async function db(item, q) {
+    const key = localStorage.getItem(item)
+    if (!key) {
+        const answer = await vibenet.prompt(q)
+        localStorage.setItem(item, answer)
+        return answer
+    } else {
+        return key
+    }
+}
+
 // Function to get the current time and day
 function getCurrentTimeAndDay() {
     return new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -12,9 +23,9 @@ function getGreeting() {
 }
 
 // Update greeting and time every minute
-function updateGreetingAndTime() {
+async function updateGreetingAndTime() {
     const greetingElement = document.getElementById("greeting");
-    const name = "Seth"; // Replace with the user's name
+    const name = await db("name", "What's your name?"); // Replace with the user's name
     const greeting = getGreeting();
     greetingElement.textContent = `${greeting}, ${name}`;
 
@@ -39,3 +50,9 @@ searchInput.addEventListener("keypress", function (event) {
         }
     }
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+	vibenet.ipc.newtab((url) => {
+        console.log(url)
+    })
+})

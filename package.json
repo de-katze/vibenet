@@ -13,7 +13,10 @@
     "@cliqz/adblocker-electron": "^1.26.6",
     "@pyke/vibe": "^0.4.0",
     "custom-electron-titlebar": "^4.2.7",
-    "electron": "^26.1.0",
-    "electron-tabs": "^1.0.1"
+    "electron": "github:castlabs/electron-releases",
+    "electron-context-menu": "^3.6.1",
+    "electron-prompt": "^1.7.0",
+    "electron-tabs": "^1.0.1",
+    "v8-compile-cache": "^2.4.0"
   }
 }
