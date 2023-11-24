@@ -1,2 +1,4 @@
 # VibeNet
-An Electron based "browser" utilizing @pyke/vibe for an acrylic effect.
+An Electron based "browser" with an acrylic effect.
+
+Heavily a WIP, do NOT use.
