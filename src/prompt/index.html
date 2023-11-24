@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.6/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="index.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <div class="card w-96 bg-neutral text-neutral-content">
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title" id="title"></h2>
+                  <input type="text" placeholder="Type here" class="input input-ghost w-full max-w-xs" autofocus="" id="input" />
+                  <div class="card-actions justify-end">
+                    <button class="btn btn-primary" onclick="window.submit()">Ok</button>
+                    <button class="btn btn-ghost" onclick="window.close()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

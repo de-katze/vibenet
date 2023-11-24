@@ -4,6 +4,7 @@ const workers = {
 }
 
 const title = document.getElementById("title");
+/*
 const tabGroup = document.querySelector("tab-group");
 
 tabGroup.setDefaultTab({ title: "New Tab", src: "newtab/index.html", active: true, webviewAttributes: { preload: "tabPreload.js", plugins: true, nodeintegration: true } })
@@ -33,33 +34,7 @@ tabGroup.on("tab-added", (tab, tabGroup) => {
 });
 
 tabGroup.addTab()
-
-// Set up a MutationObserver to detect changes in the DOM
-const observer = new MutationObserver(() => {
-    const menubar = document.getElementsByClassName("cet-menubar")[0];
-
-    if (menubar && menubar.children.length >= 5) {
-        setupMenuBarItem(menubar.children[0], "Bitwarden", (() => vibenet.bitwarden()))
-        setupMenuBarItem(menubar.children[1], "Back", (() => tabGroup.getActiveTab().webview.goBack()))
-        setupMenuBarItem(menubar.children[2], "Reload", (() => tabGroup.getActiveTab().webview.reload()))
-        setupMenuBarItem(menubar.children[3], "Forward", (() => tabGroup.getActiveTab().webview.goForward()))
-
-        const sb = document.createElement("input")
-        sb.type = "text"
-        sb.classList.add("searchbar")
-        sb.classList.add("cet-menubar-menu-button")
-        sb.id = "searchbar"
-        sb.placeholder = "Search"
-
-        menubar.children[4].replaceWith(sb);
-
-        searchBar()
-
-        observer.disconnect()
-    }
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
+*/
 
 function searchBar() {
     const searchbar = document.getElementById("searchbar")
@@ -100,16 +75,7 @@ function determineType(input) {
     }
 }
 
-document.addEventListener("keydown", (e) => {
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-        tabGroup.getActiveTab().webview.openDevTools()
-    }
-});
-
-function setupMenuBarItem(element, title, listener) {
-    element.setAttribute("title", title);
-    element.addEventListener("click", listener);
-}
+const setFavicon = (host) => document.getElementById("searchbar").style.setProperty("--icon", `url("https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${host}&size=28")`);
 
 function addToHistory(url, title) {
     workers.history.postMessage({ type: 'addToHistory', data: { url, title } });

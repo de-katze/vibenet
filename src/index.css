@@ -1,52 +1,10 @@
-html,
-body {
-  background: #0000008f !important;
+#searchbar {
+    background-image: var(--icon);
+    background-repeat: no-repeat;
+    background-position: 8px;
+    background-size: 20px;
 }
 
-body {
-  margin: 0;
-}
-
-.cet-container {
-  display: flex
-}
-
-tab-group {
-  width: 100%
-}
-
-.cet-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.searchbar {
-  width: 20vw;
-  z-index: 9999999999999;
-  border: none;
-  background-color: rgba(7, 7, 7, 0.223);
-  color: #DEDEDE;
-  height: 30px !important;
-}
-
-.searchbar:hover {
-  background-color: rgba(7, 7, 7, 0.223) !important;
-}
-
-* {
-  --tabgroup-background: rgba(23, 23, 23, 0);
-  --tab-font-family: monospace;
-  --tab-background: #0000009e !important;
-  --tab-color: #fff;
-  --tab-border-color: transparent;
-  --tab-active-color: #fff;
-  --tab-active-background: rgba(23, 23, 23, 0.469);
-  --tag-hover-color: #fff;
-  --tag-hover-background: #3434346f;
-  --button-color: #fff;
-  --button-hover-background: #622121ce;
-  --button-hover-color: #fff;
-  --badge-background: rgba(0, 0, 0, 0.8);
-  --badge-color: #fff;
+webview {
+    height: calc(100vh - 85.9px);
 }
