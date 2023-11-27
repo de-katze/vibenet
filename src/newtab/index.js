@@ -1,7 +1,7 @@
-async function db(item, q) {
+async function db(item, q, da) {
     const key = localStorage.getItem(item)
     if (!key) {
-        const answer = await vibenet.prompt(q)
+        const answer = prompt(q, da)
         localStorage.setItem(item, answer)
         return answer
     } else {
@@ -25,7 +25,7 @@ function getGreeting() {
 // Update greeting and time every minute
 async function updateGreetingAndTime() {
     const greetingElement = document.getElementById("greeting");
-    const name = await db("name", "What's your name?"); // Replace with the user's name
+    const name = await db("name", "What's your name?", "Engel"); // Replace with the user's name
     const greeting = getGreeting();
     greetingElement.textContent = `${greeting}, ${name}`;
 
@@ -50,9 +50,3 @@ searchInput.addEventListener("keypress", function (event) {
         }
     }
 });
-
-window.addEventListener('DOMContentLoaded', () => {
-	vibenet.ipc.newtab((url) => {
-        console.log(url)
-    })
-})

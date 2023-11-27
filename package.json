@@ -10,8 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cliqz/adblocker-electron": "^1.26.6",
+    "@cliqz/adblocker-electron": "latest",
     "electron": "latest",
-    "v8-compile-cache": "^2.4.0"
+    "electron-context-menu": "^3.6.1",
+    "v8-compile-cache": "latest"
   }
 }

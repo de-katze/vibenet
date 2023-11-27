@@ -1,1 +1,0 @@
-console.log(require("os").release().split(".")[2] > 17762)
