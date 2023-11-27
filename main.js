@@ -93,11 +93,5 @@ app.whenReady().then(async () => {
 
     ipcMain.on('webview-Setup', (event) => {
         contextMenu({ window: webContents.fromFrame(event.senderFrame) });
-      });
-
-    ipcMain.handle("fetch", async (e, url) => {
-        const data = await fetch(url)
-        const text = await data.text()
-        return text
-    })
+    });
 });
